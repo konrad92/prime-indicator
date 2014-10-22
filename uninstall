@@ -16,7 +16,10 @@ pkill -f "prime-indicator"
 # remove sudoers file from system
 rm /etc/sudoers.d/prime-indicator-sudoers
 
-# copy required files
+# remove indicator files
 rm -rf /usr/share/prime-indicator/ \
     /usr/lib/prime-indicator/ \
     /usr/bin/prime-indicator
+
+# remove languages
+rm /usr/share/locale/*/LC_MESSAGES/prime-indicator.mo

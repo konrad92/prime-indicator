@@ -55,6 +55,9 @@ chmod a+x /usr/lib/prime-indicator/switchgpu
 
 cp prime-indicator /usr/bin/
 
+# languages
+cp po/pl/prime-indicator.mo /usr/share/locale/pl/LC_MESSAGES/
+
 # autostart
 for i do
     if [[ $i = "--no-autostart" ]]; then
