@@ -1,0 +1,10 @@
+#!/bin/bash
+
+if [[ `prime-select query` == 'intel' ]]
+then
+  /usr/lib/prime-indicator/dgpustart
+  echo "Switch to discrete graphic card";
+else
+  /usr/lib/prime-indicator/igpustart
+  echo "Switch to integrated graphic card";
+fi

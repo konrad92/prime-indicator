@@ -1,0 +1,22 @@
+#!/bin/bash
+#
+# PRIME indicator uninstall script
+# required to be run with root permissions
+#
+
+# check for root
+if [ "$(id -u)" != "0" ]; then
+    echo "You have to run this script with root permissions first"
+    exit 1
+fi
+
+# kill prime-indicator if running
+pkill -f "prime-indicator"
+
+# remove sudoers file from system
+rm /etc/sudoers.d/prime-indicator-sudoers
+
+# copy required files
+rm -rf /usr/share/prime-indicator/ \
+    /usr/lib/prime-indicator/ \
+    /usr/bin/prime-indicator

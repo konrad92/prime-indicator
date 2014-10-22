@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# PRIME indicator dedicated graphics card launch
+
+if [[ `prime-select query` == 'intel' ]]
+then
+  sudo prime-select nvidia
+  sync
+  gnome-session-quit --no-prompt
+fi

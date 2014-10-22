@@ -1,0 +1,67 @@
+#!/bin/bash
+#
+# PRIME indicator install script
+# required to be run with root permissions
+#
+
+# check for root
+if [ "$(id -u)" != "0" ]; then
+    echo "You have to run this script with root permissions first"
+    exit 1
+fi
+
+# the `--for` parameter required
+if [[ $1 != "--for" ]]; then
+    echo "You lost required --for parameter"
+    echo "Example of use: install --for myuser user2nd user3th"
+    exit 1
+fi
+
+# make new sudoers file
+echo "# PRIME indicator generated sudoers file" > newsudoers.tmp
+
+# generate newsudoers.tmp file
+for i do
+    if [[ $i =~ "--" ]]; then
+        continue
+    fi
+
+    if id -u $i > /dev/null 2>&1; then
+        echo "$i ALL=(ALL) NOPASSWD: /usr/bin/prime-select" >> newsudoers.tmp
+    else
+        echo "User $i does not exists! Qutting for security reasons."
+        exit 1
+    fi
+done
+
+# copy sudoers file into system
+cp newsudoers.tmp /etc/sudoers.d/prime-indicator-sudoers
+rm newsudoers.tmp
+
+# copy required files
+mkdir /usr/share/prime-indicator
+cp share/intel.png /usr/share/prime-indicator/
+chmod 744 /usr/share/prime-indicator/intel.png
+cp share/nvidia.png /usr/share/prime-indicator/
+chmod 744 /usr/share/prime-indicator/nvidia.png
+
+mkdir /usr/lib/prime-indicator
+cp lib/dgpustart /usr/lib/prime-indicator/
+chmod a+x /usr/lib/prime-indicator/dgpustart
+cp lib/igpustart /usr/lib/prime-indicator/
+chmod a+x /usr/lib/prime-indicator/igpustart
+cp lib/switchgpu /usr/lib/prime-indicator/
+chmod a+x /usr/lib/prime-indicator/switchgpu
+
+cp prime-indicator /usr/bin/
+
+# autostart
+for i do
+    if [[ $i = "--no-autostart" ]]; then
+        exit 0
+    fi
+done
+
+cp prime-indicator.desktop /etc/xdg/autostart/
+
+exit 0

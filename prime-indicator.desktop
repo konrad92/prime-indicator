@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Name=PRIME indicator
+Exec=/usr/bin/prime-indicator
+Icon=/
+Comment=PRIME indicator
+X-GNOME-Autostart-enabled=true
